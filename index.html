@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>IA Leo</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 28px 18px 30px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #555;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.status {
+  font-size: 12px;
+  color: #999;
+  letter-spacing: 1px;
+}
+
+h1 {
+  font-size: 38px;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  color: #888;
+  margin-bottom: 30px;
+}
+
+.card {
+  border: 1px solid #333;
+  border-radius: 24px;
+  padding: 22px;
+  background: #090909;
+  margin-bottom: 18px;
+}
+
+.card-title {
+  color: #888;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.greeting {
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.voice {
+  width: 100%;
+  height: 150px;
+  border: 1px solid #333;
+  border-radius: 24px;
+  background: #050505;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  margin-bottom: 18px;
+}
+
+.mic {
+  width: 64px;
+  height: 64px;
+  border: 1px solid #777;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
+}
+
+.voice span {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.module {
+  border: 1px solid #292929;
+  border-radius: 18px;
+  padding: 18px;
+  background: #080808;
+  min-height: 105px;
+}
+
+.module-icon {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.module-title {
+  font-weight: 600;
+}
+
+.module-text {
+  color: #777;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 15px;
+  color: white;
+  padding: 14px;
+  font-size: 15px;
+  outline: none;
+}
+
+button {
+  border: 1px solid #444;
+  background: #111;
+  color: white;
+  border-radius: 14px;
+  padding: 13px 18px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.memory {
+  color: #bbb;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.footer {
+  text-align: center;
+  color: #555;
+  font-size: 11px;
+  margin-top: 30px;
+  letter-spacing: 1px;
+}
+
+.listening {
+  border-color: #fff;
+  box-shadow: 0 0 25px rgba(255,255,255,.12);
+}
+
+@media(max-width:380px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="top">
+    <div class="logo">L</div>
+    <div class="status" id="status">SISTEMA ONLINE</div>
+  </div>
+
+  <h1>Olá, Leonardo.</h1>
+  <div class="subtitle">Eu sou a IA Leo.</div>
+
+  <div class="card">
+    <div class="card-title">Assistente</div>
+    <div class="greeting">
+      Estou pronta para ajudar você com sua empresa, sua organização e suas tarefas.
+    </div>
+  </div>
+
+  <div class="voice" id="voiceButton">
+    <div class="mic">◉</div>
+    <span>Toque para falar com a IA Leo</span>
+  </div>
+
+  <div class="grid">
+
+    <div class="module">
+      <div class="module-icon">⌂</div>
+      <div class="module-title">Casa</div>
+      <div class="module-text">Automação e dispositivos</div>
+    </div>
+
+    <div class="module">
+      <div class="module-icon">▣</div>
+      <div class="module-title">Empresa</div>
+      <div class="module-text">LJ Instalações</div>
+    </div>
+
+    <div class="module">
+      <div class="module-icon">R$</div>
+      <div class="module-title">Financeiro</div>
+      <div class="module-text">Controle financeiro</div>
+    </div>
+
+    <div class="module">
+      <div class="module-icon">◷</div>
+      <div class="module-title">Agenda</div>
+      <div class="module-text">Compromissos</div>
+    </div>
+
+    <div class="module">
+      <div class="module-icon">♙</div>
+      <div class="module-title">Clientes</div>
+      <div class="module-text">Cadastro e atendimento</div>
+    </div>
+
+    <div class="module">
+      <div class="module-icon">⚙</div>
+      <div class="module-title">Serviços</div>
+      <div class="module-text">Ordens e manutenção</div>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <div class="card-title">Memória local</div>
+
+    <textarea id="note"
+      placeholder="Escreva algo que você quer guardar na IA Leo..."></textarea>
+
+    <button onclick="saveNote()">Salvar memória</button>
+
+    <div id="memory" class="memory" style="margin-top:15px;"></div>
+  </div>
+
+  <div class="footer">
+    IA LEO • ASSISTENTE PESSOAL
+  </div>
+
+</div>
+
+<script>
+
+const statusText = document.getElementById("status");
+const voiceButton = document.getElementById("voiceButton");
+const memoryBox = document.getElementById("memory");
+
+function loadMemory() {
+  const notes = JSON.parse(localStorage.getItem("leo_memory") || "[]");
+
+  if (notes.length === 0) {
+    memoryBox.textContent = "Nenhuma memória salva ainda.";
+    return;
+  }
+
+  memoryBox.textContent = notes
+    .map((note, index) => (index + 1) + ". " + note)
+    .join("\n");
+}
+
+function saveNote() {
+  const input = document.getElementById("note");
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  const notes = JSON.parse(localStorage.getItem("leo_memory") || "[]");
+
+  notes.push(text);
+
+  localStorage.setItem("leo_memory", JSON.stringify(notes));
+
+  input.value = "";
+
+  loadMemory();
+
+  speak("Memória salva.");
+}
+
+function speak(text) {
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+
+    const voice = new SpeechSynthesisUtterance(text);
+    voice.lang = "pt-BR";
+    voice.rate = 1;
+    voice.pitch = 1;
+
+    window.speechSynthesis.speak(voice);
+  }
+}
+
+let recognition;
+
+if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  recognition = new SpeechRecognition();
+
+  recognition.lang = "pt-BR";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = function() {
+    statusText.textContent = "OUVINDO...";
+    voiceButton.classList.add("listening");
+  };
+
+  recognition.onend = function() {
+    statusText.textContent = "SISTEMA ONLINE";
+    voiceButton.classList.remove("listening");
+  };
+
+  recognition.onresult = function(event) {
+
+    const command =
+      event.results[0][0].transcript.toLowerCase();
+
+    statusText.textContent = "PROCESSANDO...";
+
+    setTimeout(() => {
+
+      if (
+        command.includes("olá") ||
+        command.includes("oi") ||
+        command.includes("leo")
+      ) {
+        speak("Olá, Leonardo. Estou pronta.");
+      }
+
+      else if (command.includes("empresa")) {
+        speak("O módulo da empresa está disponível.");
+      }
+
+      else if (command.includes("financeiro")) {
+        speak("O módulo financeiro está disponível.");
+      }
+
+      else if (command.includes("casa")) {
+        speak("O módulo Casa está disponível.");
+      }
+
+      else {
+        speak(
+          "Entendi. Ainda estou aprendendo esse comando."
+        );
+      }
+
+      statusText.textContent = "SISTEMA ONLINE";
+
+    }, 400);
+  };
+
+}
+
+voiceButton.addEventListener("click", function() {
+
+  if (!recognition) {
+    speak(
+      "O reconhecimento de voz não está disponível neste navegador."
+    );
+    return;
+  }
+
+  try {
+    recognition.start();
+  } catch (error) {
+    console.log(error);
+  }
+
+});
+
+loadMemory();
+
+</script>
+
+</body>
+</html>
